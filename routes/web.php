@@ -11,11 +11,25 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-
 Route::get('/', function () {
-    $user = \App\User::find(1);
-    event( new \App\Events\UserSignUp($user));
+    return view('welcome');
 });
+
+Route::group(['namespace'=>'Admin','prefix'=>'admins',],function () {
+    Route::group(['middleware'=>'manager'],function () {
+        Route::resource('managers','ManagerController',[
+            'only'=>['index','create','store','edit','update'],
+        ]);
+        Route::get('/','IndexController@index')->name('admins.index');
+    });
+    Route::get('/login','Auth\LoginController@showLoginForm')->name('admins.login.show');
+    Route::post('/login','Auth\LoginController@login')->name('admins.login.check');
+});
+
+Auth::routes();
+
+Route::get('/test',function () {
+    return view('admin.index.login');
+});
+
+Route::get('/home','HomeController@index')->name('home');
