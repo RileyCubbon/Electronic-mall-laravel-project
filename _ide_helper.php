@@ -1692,7 +1692,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Attempt to authenticate using HTTP Basic Auth.
+         * Attempt to authorities using HTTP Basic Auth.
          *
          * @param string $field
          * @param array $extraConditions
@@ -1718,7 +1718,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Attempt to authenticate a user using the given credentials.
+         * Attempt to authorities a user using the given credentials.
          *
          * @param array $credentials
          * @param bool $remember
@@ -1780,7 +1780,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get the last user we attempted to authenticate.
+         * Get the last user we attempted to authorities.
          *
          * @return \App\Models\User
          * @static 
@@ -7780,7 +7780,7 @@ namespace Illuminate\Support\Facades {
          * Here is the process to determine the format:
          * 
          *  * format defined by the user (with setRequestFormat())
-         *  * _format request attribute
+         *  * _format request attributes
          *  * $default
          *
          * @param string $default The default format

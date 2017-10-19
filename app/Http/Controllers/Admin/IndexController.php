@@ -11,4 +11,9 @@ class IndexController extends Controller
     {
         return view('admin.index.index');
     }
+
+    public function right (  )
+    {
+        return view('admin.index.default');
+    }
 }

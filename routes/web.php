@@ -17,19 +17,14 @@ Route::get('/', function () {
 
 Route::group(['namespace'=>'Admin','prefix'=>'admins',],function () {
     Route::group(['middleware'=>'manager'],function () {
-        Route::resource('managers','ManagerController',[
-            'only'=>['index','create','store','edit','update'],
-        ]);
+        Route::resource('managers','ManagersController',['except'=> ['show']]);
         Route::get('/','IndexController@index')->name('admins.index');
+        Route::get('/index','IndexController@right')->name('admins.right');
     });
     Route::get('/login','Auth\LoginController@showLoginForm')->name('admins.login.show');
     Route::post('/login','Auth\LoginController@login')->name('admins.login.check');
 });
 
 Auth::routes();
-
-Route::get('/test',function () {
-    return view('admin.index.login');
-});
 
 Route::get('/home','HomeController@index')->name('home');
