@@ -12,8 +12,8 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
-    'failed' => 'These credentials do not match our records.',
+    'verify'   => '请联系管理员分配权限',
+    'failed'   => '这些凭据与我们的记录不相符',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

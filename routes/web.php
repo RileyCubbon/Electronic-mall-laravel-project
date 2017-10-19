@@ -23,6 +23,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admins',],function () {
     });
     Route::get('/login','Auth\LoginController@showLoginForm')->name('admins.login.show');
     Route::post('/login','Auth\LoginController@login')->name('admins.login.check');
+    Route::get('/logout','Auth\LoginController@logout')->name('admins.logout');
 });
 
 Auth::routes();

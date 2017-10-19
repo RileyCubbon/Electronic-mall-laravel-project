@@ -26,4 +26,10 @@ class Manager extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    const IS_DELETE = 1;
+    const UN_DELETE = 0;
+
+    const IS_VERIFY = 1;
+    const UN_VERIFY = 0;
 }

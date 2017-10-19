@@ -17,6 +17,7 @@ class CreateJurisdictionsTable extends Migration
             $table->increments('id');
             $table->unsignedTinyInteger('role_id')->commnet('角色id');
             $table->unsignedTinyInteger('authorities')->commnet('权限id');
+            $table->tinyInteger('is_delete')->default(0)->comment('是否软删除');
             $table->timestamps();
         });
     }

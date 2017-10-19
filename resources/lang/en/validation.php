@@ -100,8 +100,17 @@ return [
     */
 
     'custom' => [
-        'attributes-name' => [
-            'rule-name' => 'custom-message',
+        'name'     => [
+            'required' => '请填写用户名',
+            'string'   => '用户名不能是特殊字符',
+        ],
+        'password' => [
+            'required' => '请填写密码',
+            'string'   => '密码不能是特殊字符',
+        ],
+        'captcha'  => [
+            'required' => '请填写验证码',
+            'captcha'  => '验证码不正确',
         ],
     ],
 

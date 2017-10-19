@@ -14,13 +14,31 @@
 				<ul>
 					<li>
 					<input type="text" name="name" class="text" placeholder=" 请输入用户名"/>
+					<span><i class="fa fa-user"></i></span>
+					@if ($errors->has('name'))
+						<div>
+							<strong>&ensp;{{ $errors->first('name') }}</strong>
+						</div>
+					@endif
 					</li>
 					<li>
 						<input type="password" name="password"  placeholder=" 请输入密码" class="text"/>
+						<span><i class="fa fa-lock"></i></span>
+					@if ($errors->has('password'))
+						<div>
+							<strong>&ensp;{{ $errors->first('password') }}</strong>
+						</div>
+						@endif
 					</li>
 					<li>
 						<input type="text" class="code" placeholder=" 请输入验证码" name="captcha"/>
+						<span><i class="fa fa-check-square-o"></i></span>
 						<img src="{{ captcha_src() }}" alt="" onclick="this.src='{{ captcha_src() }}&_='+Math.random()" >
+						@if ($errors->has('captcha'))
+						<div >
+							<strong>&ensp;{{ $errors->first('captcha') }}</strong>
+						</div>
+						@endif
 					</li>
 					<li>
 						<input type="submit" value="立即登陆"/>
