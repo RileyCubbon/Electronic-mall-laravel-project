@@ -17,7 +17,14 @@ Route::get('/', function () {
 
 Route::group(['namespace'=>'Admin','prefix'=>'admins',],function () {
     Route::group(['middleware'=>'manager'],function () {
-        Route::resource('managers','ManagersController',['except'=> ['show']]);
+        Route::resource('managers','ManagersController',['only' => [
+            'index','create','store','edit','update','destroy'
+        ]]);
+        Route::resource('roles','RolesController',[ 'names'=> [ 'show' => 'roles.verify']]);
+        Route::resource('authorities','AuthoritiesController',[ 'only' => [
+            'index','create','store','destroy'
+        ]]);
+
         Route::get('/','IndexController@index')->name('admins.index');
         Route::get('/index','IndexController@right')->name('admins.right');
     });

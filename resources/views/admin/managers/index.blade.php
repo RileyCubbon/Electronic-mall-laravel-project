@@ -50,19 +50,21 @@
                         <th>添加时间</th>
                         <th>操作</th>
                     </tr>
+                    @foreach($managers as $manager)
                     <tr>
-                        <td class="tc"><input type="checkbox" name="id[]" value="59"></td>
-                        <td class="tc">59</td>
-                        <td>Junyy</td>
-                        <td>1020446694@qq.com</td>
+                        <td class="tc"><input type="checkbox" name="id[]" value="{{ $manager->id }}"></td>
+                        <td class="tc">{{ $manager->id }}</td>
+                        <td>{{ $manager->name }}</td>
+                        <td>{{ $manager->email }}</td>
                         <td>主管</td>
-                        <td>Junyy</td>
-                        <td>1</td>
-                        <td>2014-03-15 21:11:01</td>
+                        <td>{{ $manager->created_user_name }}</td>
+                        <td>{{ $manager->is_verify ? '已通过' : '未通过' }}</td>
+                        <td>{{ $manager->created_at }}</td>
                         <td>
                             <a href="#">删除</a>
                         </td>
                     </tr>
+                    @endforeach
                 </table>
             </div>
         </div>

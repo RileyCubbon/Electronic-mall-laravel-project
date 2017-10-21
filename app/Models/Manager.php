@@ -15,7 +15,7 @@ class Manager extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'nickname', 'email', 'password', 'is_verify', 'verify_str',
+        'name', 'nickname', 'email', 'password', 'is_verify', 'verify_str','role_id'
     ];
 
     /**
@@ -32,4 +32,9 @@ class Manager extends Authenticatable
 
     const IS_VERIFY = 1;
     const UN_VERIFY = 0;
+
+    public function role (  )
+    {
+        return $this->hasOne(Role::class);
+    }
 }

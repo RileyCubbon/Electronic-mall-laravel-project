@@ -1,21 +1,41 @@
 @extends('admin.layouts.app')
 @section('body')
     <div class="result_wrap">
-        <form action="#" method="post">
+        <form action="{{ route('roles.store') }}" method="post">
             <table class="add_tab">
                 <tbody>
                     <tr>
-                        <th>管理级别名称：</th>
+                        <th style="width:200px">管理级别名称：</th>
                         <td>
-                            <input type="text" name="">
-                            <span><i class="fa fa-exclamation-circle yellow"></i>这里是默认长度</span>
+                            {{ csrf_field() }}
+                            <input type="text" name="grade">
+                            @if($errors->has('grade'))
+                                <span><i class="fa fa-exclamation-circle yellow"></i>{{ $errors->first('grade') }}</span>
+                            @endif
                         </td>
                     </tr>
                     <tr>
                         <th>权限：</th>
                         <td>
-                            <label for=""><input type="checkbox" name="">复选框一</label>
-                            <label for=""><input type="checkbox" name="">复选框二</label>
+                            <table class="list_tab">
+                                @foreach($authorities as $authority)
+                                <tr>
+                                    <td style="width:120px;">
+                                        <span>{{ $authority->name }}</span>
+                                    </td>
+                                    <td>
+                                        @foreach($authority->children as $children)
+                                        <label for=""><input type="checkbox" name="authority_id[]" value="{{ $children->id }}">
+                                            {{ $children->name }}
+                                        </label>
+                                        @endforeach
+                                        @if($errors->has('authority_id'))
+                                        <span><i class="fa fa-exclamation-circle yellow"></i>{{ $errors->first('authority_id') }}</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </table>
                         </td>
                     </tr>
                     <tr>

@@ -1,45 +1,47 @@
 @extends('admin.layouts.app')
-@section('header')
-    <link rel="stylesheet" href="{{ asset('share/css/app.css') }}">
-@endsection
 @section('body')
     <div class="result_wrap">
-        <form action="#" method="post">
-            <table class="table table-bordered table-striped">
-                <colgroup>
-                    <col class="col-md-2">
-                    <col class="col-md-9">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>父级权限</th>
-                    <th>子级权限</th>
-                </tr>
-                </thead>
+        <form action="{{ route('roles.update',$role->id) }}" method="post">
+            <table class="add_tab">
                 <tbody>
                 <tr>
-                    <td scope="row">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox1" value="option1"> 1
-                        </label>
-                    </td>
+                    <th style="width:200px">管理级别名称：</th>
                     <td>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox1" value="option1"> 1
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox2" value="option2"> 2
-                        </label>
+                        {{ method_field('PUT') }}
+                        {{ csrf_field() }}
+                        <h2 style="margin-left: 50px">{{ $role->grade }}</h2>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        <div class="row">
-                            <div class="col-md-offset-2">
-                                <input type="submit" value="提交">
-                                <input type="button" class="back" onclick="history.go(-1)" value="返回">
-                            </div>
-                        </div>
+                    <th>权限：</th>
+                    <td>
+                        <table class="list_tab">
+                            @foreach($authorities as $authority)
+                                <tr>
+                                    <td style="width:120px;">
+                                        <span>{{ $authority->name }}</span>
+                                    </td>
+                                    <td>
+                                        @foreach($authority->children as $children)
+                                            <label for="">
+                                                <input type="checkbox" name="authority_id[]" {{ in_array($children->id,$possessed) ? 'checked' : '' }} value="{{ $children->id }}">
+                                                {{ $children->name }}
+                                            </label>
+                                        @endforeach
+                                        @if($errors->has('authority_id'))
+                                            <span><i class="fa fa-exclamation-circle yellow"></i>{{ $errors->first('authority_id') }}</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <input type="submit" value="提交">
+                        <input type="button" class="back" onclick="history.go(-1)" value="返回">
                     </td>
                 </tr>
                 </tbody>

@@ -33,8 +33,8 @@
                 <ul class="sub_menu">
 					<li><a href="{{ route('managers.index') }}" target="main"><i class="fa fa-fw fa-list-ul"></i>管理员列表</a></li>
                     <li><a href="#" target="main"><i class="fa fa-fw fa-plus-square"></i>管理员新增</a></li>
-                    <li><a href="#" target="main"><i class="fa fa-fw fa-users"></i>角色管理</a></li>
-                    <li><a href="#" target="main"><i class="fa fa-fw fa-warning"></i>权限管理</a></li>
+                    <li><a href="{{ route('roles.index') }}" target="main"><i class="fa fa-fw fa-users"></i>角色管理</a></li>
+                    <li><a href="{{ route('authorities.index') }}" target="main"><i class="fa fa-fw fa-warning"></i>权限管理</a></li>
                 </ul>
             </li>
             <li>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Model extends Eloquent
 {
-    public function requirements ( $where )
+    public function requirements ( array $where )
     {
         $builder = with($this)->setHidden([])->newQuery();
         foreach ($where as $value)

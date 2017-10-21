@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Manager;
+use App\Query\ManagersQuery;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Validation\Validator;
 
 class LoginController extends Controller
 {
@@ -32,11 +30,16 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/admins';
 
+    protected $query;
+
     /**
      * Create a new controller instance.
+     *
+     * @param ManagersQuery $query
      */
-    public function __construct ()
+    public function __construct ( ManagersQuery $query )
     {
+        $this->query = $query;
         $this->middleware('guest:admins.index,manager')->except('logout');
     }
 
@@ -56,13 +59,14 @@ class LoginController extends Controller
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login ( Request $request )
     {
         $this->validateLogin($request);
-        if ($this->hasTooManyLoginAttempts($request)) {
+        if ( $this->hasTooManyLoginAttempts($request) ) {
             $this->fireLockoutEvent($request);
             $this->sendLockoutResponse($request);
         }
@@ -71,11 +75,11 @@ class LoginController extends Controller
          * 增加减少一次登陆次数，前面到通过用户名和密码认证后会自动将登陆状态
          * 保存到session中，所有需要退出登陆，然后重定向到后台登陆页面
          */
-        if ($this->attemptLogin($request)) {
-            if (!$this->validationLoginAuthorities($request)) {
+        if ( $this->attemptLogin($request) ) {
+            if ( !$this->validationLoginAuthorities($request) ) {
                 $this->incrementLoginAttempts($request);
                 $this->logout($request);
-                return redirect()->route('admins.login.show')->withErrors(['name'=>'请联系管理员分配权限']);
+                return redirect()->route('admins.login.show')->withErrors([ 'name' => '请联系管理员分配权限' ]);
             }
             /**
              * 用户名、密码、审核状态全部都通过后记住登陆状态，并跳转后台首页
@@ -87,22 +91,23 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
-    public function username (  )
+    public function username ()
     {
         return 'name';
     }
 
-    protected function validateLogin(Request $request)
+    protected function validateLogin ( Request $request )
     {
         $this->validate($request, [
             $this->username() => 'required|string',
-            'password' => 'required|string',
-            'captcha' => 'required|captcha',
+            'password'        => 'required|string',
+            'captcha'         => 'required|captcha',
         ]);
     }
 
     /**
      * 验证数据与数据库匹配情况
+     *
      * @param Request $request
      *
      * @return bool
@@ -122,9 +127,6 @@ class LoginController extends Controller
      */
     protected function validationCredentials ( Request $request )
     {
-        return array_merge([
-            'is_delete' => Manager::UN_DELETE,
-            'is_verify' => Manager::IS_VERIFY,
-        ],$request->only('password'));
+        return array_merge($this->query->managerLoginCondition(), $request->only('password'));
     }
 }
